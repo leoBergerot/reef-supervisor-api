@@ -17,10 +17,11 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { username: username } });
   }
 
-  async create(user: User): Promise<User> {
-    const salt = bcrypt.genSaltSync(10);
-    user.password = bcrypt.hashSync(user.plainPassword, salt);
+  async updateOrCreate(user: User): Promise<User> {
+    if (user.plainPassword) {
+      const salt = bcrypt.genSaltSync(10);
+      user.password = bcrypt.hashSync(user.plainPassword, salt);
+    }
     return await this.usersRepository.save(user);
   }
-
 }

@@ -10,7 +10,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('/')
   createUser(@Body() user: User) {
-    const registeredUser = this.usersService.create(user);
+    const registeredUser = this.usersService.updateOrCreate(user);
     return registeredUser.then(user => {
       return new User(user);
     });
