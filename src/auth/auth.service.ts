@@ -54,20 +54,21 @@ export class AuthService {
 
     const secret = userForgotPassword.password + userForgotPassword.id + userForgotPassword.firstName + userForgotPassword.lastName;
     const token = jwt.encode(payload, secret);
-    if (!await recoverPasswordEmail(userForgotPassword, token)) {
+    if (!await recoverPasswordEmail(userForgotPassword, token.replace(/\./g,'+'))) {
       throw new InternalServerErrorException();
     }
+    return user;
   }
 
   async recoverPassword(user: RecoverPasswordDto) {
     const userRecoverPassword = await getRepository(User).findOne(user.id);
     const secret = userRecoverPassword.password + userRecoverPassword.id + userRecoverPassword.firstName + userRecoverPassword.lastName;
     try {
-      jwt.decode(user.token, secret);
+      jwt.decode(user.token.replace(/\+/g, '.'), secret);
     } catch (e) {
       throw  new ForbiddenException();
     }
     userRecoverPassword.plainPassword = user.newPassword;
-    await this.usersService.updateOrCreate(userRecoverPassword);
+    return await this.usersService.updateOrCreate(userRecoverPassword);
   }
 }

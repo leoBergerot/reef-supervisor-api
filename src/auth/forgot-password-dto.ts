@@ -1,5 +1,4 @@
 import {
-  IsEmail,
   registerDecorator,
   ValidationArguments,
   ValidationOptions,
@@ -8,6 +7,7 @@ import {
 } from 'class-validator';
 import { getRepository } from 'typeorm';
 import { User } from '../users/user.entity';
+import { IsTokenValid } from './token-constraint';
 
 @ValidatorConstraint({ async: true })
 export class IsEmailExistConstraint implements ValidatorConstraintInterface {
@@ -38,11 +38,13 @@ export function IsEmailExist(validationOptions?: ValidationOptions) {
 }
 
 export class ForgotPasswordDto {
-  @IsEmail()
   @IsEmailExist({
-    message: 'This email $value doesn\'t exist',
+    message: 'This email $value doesn\'t link to account',
   })
   email: string;
+
+  @IsTokenValid()
+  token: string
 }
 
 

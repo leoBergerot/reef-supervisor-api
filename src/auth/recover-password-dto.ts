@@ -10,5 +10,3 @@ export class RecoverPasswordDto {
   @IsNotEmpty()
   id: string;
 }
-
-
