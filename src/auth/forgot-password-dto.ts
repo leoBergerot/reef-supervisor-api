@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { getRepository } from 'typeorm';
 import { User } from '../users/user.entity';
-import { IsTokenValid } from './token-constraint';
+import { IsTokenValid } from './recaptcha-token-constraint';
 
 @ValidatorConstraint({ async: true })
 export class IsEmailExistConstraint implements ValidatorConstraintInterface {
@@ -44,7 +44,7 @@ export class ForgotPasswordDto {
   email: string;
 
   @IsTokenValid()
-  token: string
+  recaptchaToken: string
 }
 
 

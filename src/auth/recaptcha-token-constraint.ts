@@ -10,11 +10,14 @@ const fetch = require('node-fetch');
 
 @ValidatorConstraint({ async: true })
 export class isTokenValidConstraint implements ValidatorConstraintInterface {
-  async validate(token: any, args: ValidationArguments) {
-    if (token === undefined || token === '' || token === null) {
+  async validate(recaptchaToken: any, args: ValidationArguments) {
+    if (!process.env.RECAPTCHA_ENABLED) {
+      return true;
+    }
+    if (recaptchaToken === undefined || recaptchaToken === '' || recaptchaToken === null) {
       return false;
     }
-    return await fetch(`https://www.google.com/recaptcha/api/siteverify?response=${token}&secret=${process.env.RECAPTCHA_SECRET_KEY}`, {
+    return await fetch(`https://www.google.com/recaptcha/api/siteverify?response=${recaptchaToken}&secret=${process.env.RECAPTCHA_SECRET_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
