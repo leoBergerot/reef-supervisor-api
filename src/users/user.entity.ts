@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { Exclude } from 'class-transformer';
-import { IsEmailAlreadyExist, IsUsernameAlreadyExist } from './user.validator';
+import { IsEmailAlreadyExist } from './user.validator';
+import { IsTokenValid } from '../auth/recaptcha-token-constraint';
 
 @Entity()
 export class User {
@@ -13,10 +14,6 @@ export class User {
   id: number;
 
   @Column({ nullable: false, unique: true })
-  @IsNotEmpty()
-  @IsUsernameAlreadyExist({
-    message: 'username $value already register. Choose another',
-  })
   username: string;
 
   @Column({ nullable: false })
@@ -30,11 +27,11 @@ export class User {
   @Column({ nullable: false, unique: true })
   @IsEmail()
   @IsEmailAlreadyExist({
-    message: 'email $value already register. Choose another, or recover your password',
+    message: 'Email $value already register. Choose another, or recover your password',
   })
   email: string;
 
-  @Column({ default: true })
+  @Column({ default: false })
   isActive: boolean;
 
   @Column({ nullable: false })
@@ -44,4 +41,7 @@ export class User {
   @IsNotEmpty()
   @Exclude({ toPlainOnly: true })
   plainPassword: string;
+
+  @IsTokenValid()
+  recaptchaToken: string;
 }
