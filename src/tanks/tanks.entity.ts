@@ -18,4 +18,7 @@ export class Tank {
 
   @ManyToOne(type => User, user => user.tanks)
   user: User;
+
+  @Column({ nullable: true })
+  avatar: string;
 }

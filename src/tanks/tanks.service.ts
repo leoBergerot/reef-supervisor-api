@@ -16,4 +16,8 @@ export class TanksService extends TypeOrmCrudService<Tank> {
   ) {
     super(tanksRepository);
   }
+
+  public async setAvatar(userId: number, avatarUrl: string) {
+    await this.tanksRepository.update(userId, { avatar: avatarUrl });
+  }
 }
