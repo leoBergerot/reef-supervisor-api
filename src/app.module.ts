@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import databaseConfig from './config/database.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TanksModule } from './tanks/tanks.module';
+import { Tank } from './tanks/tanks.entity';
 
 @Module({
   imports: [
@@ -23,12 +25,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
-        entities: [User],
+        entities: [User, Tank],
         synchronize: true,
       } as TypeOrmModuleOptions),
     }),
     UsersModule,
     AuthModule,
+    TanksModule,
   ],
   controllers: [AppController],
 })

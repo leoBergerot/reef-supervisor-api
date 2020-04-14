@@ -11,7 +11,7 @@ const fetch = require('node-fetch');
 @ValidatorConstraint({ async: true })
 export class isTokenValidConstraint implements ValidatorConstraintInterface {
   async validate(recaptchaToken: any, args: ValidationArguments) {
-    if (!process.env.RECAPTCHA_ENABLED) {
+    if ('false' === process.env.RECAPTCHA_ENABLED) {
       return true;
     }
     if (recaptchaToken === undefined || recaptchaToken === '' || recaptchaToken === null) {

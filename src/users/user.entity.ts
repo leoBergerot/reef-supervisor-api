@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { IsEmailAlreadyExist } from './user.validator';
 import { IsTokenValid } from '../auth/recaptcha-token-constraint';
+import { Tank } from '../tanks/tanks.entity';
 
 @Entity()
 export class User {
@@ -44,4 +45,7 @@ export class User {
 
   @IsTokenValid()
   recaptchaToken: string;
+
+  @OneToMany(type => Tank, tank => tank.user)
+  tanks: Tank[];
 }
