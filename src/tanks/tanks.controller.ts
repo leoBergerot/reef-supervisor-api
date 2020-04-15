@@ -92,7 +92,7 @@ export class TanksController implements CrudController<Tank> {
     },
     ),
   )
-  @Patch(':id/images')
+  @Patch(':id/avatars')
   async uploadImage(@ParsedRequest() req: CrudRequest, @UploadedFile() file) {
     let tank = null;
     try {
@@ -108,7 +108,7 @@ export class TanksController implements CrudController<Tank> {
   }
 
   @UseInterceptors(CrudRequestInterceptor)
-  @Get(':id/images')
+  @Get(':id/avatars')
   async serveAvatar(@ParsedRequest() req: CrudRequest, @Res() res): Promise<any> {
     let tank = null;
     try {
