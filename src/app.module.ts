@@ -9,6 +9,9 @@ import databaseConfig from './config/database.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TanksModule } from './tanks/tanks.module';
 import { Tank } from './tanks/tanks.entity';
+import { MeasuresModule } from './measures/measures.module';
+import { Measure } from './measures/measures.entity';
+import { MeasureType } from './measures/measures.type.entity';
 
 @Module({
   imports: [
@@ -25,13 +28,15 @@ import { Tank } from './tanks/tanks.entity';
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
-        entities: [User, Tank],
+        entities: [User, Tank, Measure, MeasureType],
         synchronize: true,
+        autoLoadEntities: true,
       } as TypeOrmModuleOptions),
     }),
     UsersModule,
     AuthModule,
     TanksModule,
+    MeasuresModule,
   ],
   controllers: [AppController],
 })

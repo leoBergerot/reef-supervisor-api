@@ -46,6 +46,10 @@ export class User {
   @IsTokenValid()
   recaptchaToken: string;
 
-  @OneToMany(type => Tank, tank => tank.user)
+  @OneToMany(type => Tank, tank => tank.user,
+    {
+      eager: true,
+    },
+  )
   tanks: Tank[];
 }
