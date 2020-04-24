@@ -11,7 +11,8 @@ import { TanksModule } from './tanks/tanks.module';
 import { Tank } from './tanks/tanks.entity';
 import { MeasuresModule } from './measures/measures.module';
 import { Measure } from './measures/measures.entity';
-import { MeasureType } from './measures/measures.type.entity';
+import { MeasureType } from './measure-types/measure-types.entity';
+import { MeasureTypesModule } from './measure-types/measure-types.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MeasureType } from './measures/measures.type.entity';
     AuthModule,
     TanksModule,
     MeasuresModule,
+    MeasureTypesModule,
   ],
   controllers: [AppController],
 })

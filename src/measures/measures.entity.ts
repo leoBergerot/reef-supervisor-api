@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { Tank } from '../tanks/tanks.entity';
-import { MeasureType } from './measures.type.entity';
+import { MeasureType } from '../measure-types/measure-types.entity';
 import { CrudValidationGroups } from '@nestjsx/crud';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
