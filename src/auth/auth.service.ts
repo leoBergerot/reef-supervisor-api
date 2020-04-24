@@ -26,7 +26,7 @@ export class AuthService {
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUsername(username);
 
-    if (!user.isActive) {
+    if (user && !user.isActive) {
       throw new UnauthorizedException(null, `Your account is not activate an email was sent to ${user.email}`);
     }
 
