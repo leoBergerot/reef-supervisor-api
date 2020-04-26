@@ -18,9 +18,10 @@ export class Measure {
 
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
-  @Column({ nullable: false })
+  @Column({ nullable: false, type:'float' })
   value: number;
 
+  @IsOptional({ groups: [UPDATE, CREATE] })
   @Column({ nullable: false })
   createdAt: Date;
 

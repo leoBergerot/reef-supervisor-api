@@ -16,6 +16,12 @@ export class MeasureType {
   @Column({ nullable: false })
   unit: string;
 
+  @Column({ nullable: true, type: 'float' })
+  minValueRecommended: number;
+
+  @Column({ nullable: true, type: 'float' })
+  maxValueRecommended: number;
+
   @OneToMany(type => Measure, measure => measure.type)
   measures: any;
 }
