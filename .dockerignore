@@ -1,0 +1,7 @@
+node_modules
+dist
+upload
+.env
+.env-dist
+.dockerignore
+dockerfile.prod

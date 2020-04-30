@@ -10,3 +10,7 @@ You can request at [http://localhost:your_port](http://localhost:your_port).
 ### `yarn start:prod`
 
 Builds the backend app for production to the `build` folder.<br />
+
+### Production
+touch .env.prod and configure it
+docker build -f dockerfile.prod -t reef-supervisor-api-prod:latest .
