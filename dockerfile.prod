@@ -1,11 +1,23 @@
 # build environment
 FROM node:14-stretch as build
 WORKDIR /app
-##COPY package.json ./
-##COPY yarn.lock ./
-git clone https://github.com/leoBergerot/reef-supervisor-api.git
+
+###LOCAL###
+#COPY package.json ./
+#COPY yarn.lock ./
+###LOCAL###
+
+###FROM GIT###
+RUN git clone https://github.com/leoBergerot/reef-supervisor-api.git
+RUN mv reef-supervisor-api/* .
+RUN rm -r reef-supervisor-api
 RUN yarn install --pure-lockfile --production[true] --silent --non-interactive
+###FROM GIT###
+
+###LOCAL###
 #COPY . ./
+###LOCAL###
+
 RUN yarn build
 
 # production environment
