@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  watch:
+    types: [started]    
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.actor == github.event.repository.owner.login
+    steps:
+      - name: Get code
+        uses: actions/checkout@v2
+      - name: Build and publish
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: reef-supervisor/app-prod
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          registry: ${{ secrets.REGISTRY_NAME }}
+          dockerfile: dockerfile.prod 
+          buildoptions: "--compress --force-rm" 
+          tags: "v1"
