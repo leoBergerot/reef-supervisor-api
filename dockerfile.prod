@@ -2,16 +2,16 @@
 FROM node:14-stretch as build
 WORKDIR /app
 
-###LOCAL###
-#COPY package.json ./
-#COPY yarn.lock ./
-#COPY . ./
-###LOCAL###
+##LOCAL###
+COPY package.json ./
+COPY yarn.lock ./
+COPY . ./
+##LOCAL###
 
 ###FROM GIT###
-RUN git clone https://github.com/leoBergerot/reef-supervisor-api.git
-RUN cp -r reef-supervisor-api/. /app
-RUN rm -r reef-supervisor-api
+#RUN git clone https://github.com/leoBergerot/reef-supervisor-api.git
+#RUN cp -r reef-supervisor-api/. /app
+#RUN rm -r reef-supervisor-api
 ###FROM GIT###
 
 RUN yarn install --pure-lockfile --production[true] --silent --non-interactive
