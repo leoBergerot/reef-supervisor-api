@@ -12,7 +12,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(req, username: string, password: string): Promise<any> {
-    if (isNotEmpty(req.body.recaptchaToken) || !await (new isTokenValidConstraint).validate(req.body.recaptchaToken, new class implements ValidationArguments {
+    if (!isNotEmpty(req.body.recaptchaToken) || !await (new isTokenValidConstraint).validate(req.body.recaptchaToken, new class implements ValidationArguments {
       constraints: any[];
       object: Object;
       property: string;
