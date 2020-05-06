@@ -104,7 +104,9 @@ export class TanksController implements CrudController<Tank> {
     if (tank.avatar) {
       if (fs.existsSync(tank.avatar)) fs.unlinkSync(tank.avatar);
     }
-    await this.service.setAvatar(tank.id, `${file.path}`);
+    tank.avatar = file.path;
+    await this.service.persistTank(tank);
+    return tank
   }
 
   @UseInterceptors(CrudRequestInterceptor)

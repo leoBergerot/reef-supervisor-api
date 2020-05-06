@@ -27,7 +27,7 @@ export class Measure {
 
   @IsOptional({ groups: [UPDATE] })
   @IsNotEmpty({ groups: [CREATE] })
-  @ManyToOne(type => Tank, tank => tank.measures)
+  @ManyToOne(type => Tank, tank => tank.measures, { onDelete: 'CASCADE' })
   tank: Tank;
 
   @IsOptional({ groups: [UPDATE] })
