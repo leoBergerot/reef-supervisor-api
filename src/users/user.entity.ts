@@ -28,7 +28,7 @@ export class User {
   @Column({ nullable: false, unique: true })
   @IsEmail()
   @IsEmailAlreadyExist({
-    message: 'Email $value already register. Choose another, or recover your password',
+    message: 'Email email_already_register',
   })
   email: string;
 

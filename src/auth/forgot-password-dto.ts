@@ -39,7 +39,7 @@ export function IsEmailExist(validationOptions?: ValidationOptions) {
 
 export class ForgotPasswordDto {
   @IsEmailExist({
-    message: 'This email $value doesn\'t link to account',
+    message: 'email_unlink',
   })
   email: string;
 
