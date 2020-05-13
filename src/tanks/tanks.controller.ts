@@ -76,7 +76,7 @@ export class TanksController implements CrudController<Tank> {
   @UseInterceptors(CrudRequestInterceptor, FileInterceptor('file',
     {
       fileFilter: (req, file, cb) => {
-        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif|heic)$/)) {
           cb(new HttpException(`Unsupported file type ${extname(file.originalname)}`, HttpStatus.BAD_REQUEST), false);
         }else{
           cb(null, true);
