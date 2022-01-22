@@ -38,7 +38,7 @@
     "jwt-simple": "^0.5.6",
     "mongoose": "^5.9.6",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "node-mailjet": "^3.3.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
