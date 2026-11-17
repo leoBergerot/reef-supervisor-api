@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { IsEmailAlreadyExist } from './user.validator';
-import { IsTokenValid } from '../auth/recaptcha-token-constraint';
+import { IsTurnstileTokenValid } from '../auth/turnstile-token-constraint';
 import { Tank } from '../tanks/tanks.entity';
 
 @Entity()
@@ -43,8 +43,12 @@ export class User {
   @Exclude({ toPlainOnly: true })
   plainPassword: string;
 
-  @IsTokenValid()
-  recaptchaToken: string;
+  /** Preferred: turnstileToken. Legacy recaptchaToken still accepted by the validator. */
+  @IsTurnstileTokenValid()
+  turnstileToken: string;
+
+  /** @deprecated Prefer turnstileToken — not persisted */
+  recaptchaToken?: string;
 
   @OneToMany(type => Tank, tank => tank.user,
     {

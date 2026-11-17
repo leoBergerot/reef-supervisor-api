@@ -19,8 +19,8 @@ docker run --rm -it \
     --env EMAIL_SENDER=dev@reef-supervisor.fr \
     --env FRONTEND_URL=localhost:8181 \
     --env BACKEND_URL=localhost:8080 \
-    --env RECAPTCHA_SECRET_KEY=xxx \
-    --env RECAPTCHA_ENABLED=true \
+    --env TURNSTILE_SECRET_KEY=xxx \
+    --env TURNSTILE_ENABLED=true \
     reef-supervisor-api-prod:latest
     
 You can access to the api via -> http://localhost:8080    

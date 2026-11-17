@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { IsTokenValid } from './recaptcha-token-constraint';
+import { IsTurnstileTokenValid } from './turnstile-token-constraint';
 
 export class RecoverPasswordDto {
   @IsNotEmpty()
@@ -11,6 +11,10 @@ export class RecoverPasswordDto {
   @IsNotEmpty()
   id: string;
 
-  @IsTokenValid()
-  recaptchaToken: string
+  /** Preferred: turnstileToken. Legacy recaptchaToken still accepted by the validator. */
+  @IsTurnstileTokenValid()
+  turnstileToken: string;
+
+  /** @deprecated Prefer turnstileToken */
+  recaptchaToken?: string;
 }

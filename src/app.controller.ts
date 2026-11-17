@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
+import { AuthRateLimitGuard } from './auth/guards/auth-rate-limit.guard';
 import { ForgotPasswordDto } from './auth/forgot-password-dto';
 import { RecoverPasswordDto } from './auth/recover-password-dto';
 import { User } from './users/user.entity';
@@ -17,20 +18,22 @@ import { User } from './users/user.entity';
 export class AppController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AuthRateLimitGuard, LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(AuthRateLimitGuard)
   @Post('forgot-password')
-  async forgotPassword(@Body() user:ForgotPasswordDto) {
+  async forgotPassword(@Body() user: ForgotPasswordDto) {
     return this.authService.forgotPassword(user);
   }
 
+  @UseGuards(AuthRateLimitGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('recover-password')
-  async recoverPassword(@Body() user:RecoverPasswordDto) {
+  async recoverPassword(@Body() user: RecoverPasswordDto) {
     return new User(await this.authService.recoverPassword(user));
   }
 }

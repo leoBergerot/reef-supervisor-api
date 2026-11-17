@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { getRepository } from 'typeorm';
 import { User } from '../users/user.entity';
-import { IsTokenValid } from './recaptcha-token-constraint';
+import { IsTurnstileTokenValid } from './turnstile-token-constraint';
 
 @ValidatorConstraint({ async: true })
 export class IsEmailExistConstraint implements ValidatorConstraintInterface {
@@ -43,8 +43,12 @@ export class ForgotPasswordDto {
   })
   email: string;
 
-  @IsTokenValid()
-  recaptchaToken: string
+  /** Preferred: turnstileToken. Legacy recaptchaToken still accepted by the validator. */
+  @IsTurnstileTokenValid()
+  turnstileToken: string;
+
+  /** @deprecated Prefer turnstileToken */
+  recaptchaToken?: string;
 }
 
 

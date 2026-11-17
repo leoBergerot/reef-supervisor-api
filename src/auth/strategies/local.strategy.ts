@@ -2,8 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../auth.service';
-import { isNotEmpty, ValidationArguments } from 'class-validator';
-import { isTokenValidConstraint } from '../recaptcha-token-constraint';
+import {
+  resolveTurnstileToken,
+  verifyTurnstileToken,
+} from '../turnstile-token-constraint';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -12,13 +14,13 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(req, username: string, password: string): Promise<any> {
-    if (!isNotEmpty(req.body.recaptchaToken) || !await (new isTokenValidConstraint).validate(req.body.recaptchaToken, new class implements ValidationArguments {
-      constraints: any[];
-      object: Object;
-      property: string;
-      targetName: string;
-      value: any;
-    })) {
+    const token = resolveTurnstileToken(req.body || {});
+    const remoteip =
+      (req.headers && (req.headers['x-forwarded-for'] || '').split(',')[0].trim()) ||
+      req.ip ||
+      (req.connection && req.connection.remoteAddress);
+
+    if (!(await verifyTurnstileToken(token, remoteip))) {
       throw new UnauthorizedException();
     }
     try {

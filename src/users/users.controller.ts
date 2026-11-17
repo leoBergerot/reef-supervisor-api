@@ -7,16 +7,19 @@ import {
   Param,
   Post,
   Res,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { AuthRateLimitGuard } from '../auth/guards/auth-rate-limit.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }
 
+  @UseGuards(AuthRateLimitGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('/')
   createUser(@Body() user: User) {
